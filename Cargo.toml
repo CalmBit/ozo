@@ -1,0 +1,6 @@
+[package]
+name = "oxi"
+version = "0.1.0"
+authors = ["Ethan Brooks <EB5473@gmail.com>"]
+description = "A bare-bones CLI client for oxidation"
+[dependencies]
