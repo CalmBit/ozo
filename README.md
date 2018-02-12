@@ -1,6 +1,9 @@
 oxi
 ==========
 
+[![Travis](https://img.shields.io/travis/CalmBit/oxi.svg?style=flat-square)](https://travis-ci.org/CalmBit/oxi)
+
+
 **oxi** is a client for **oxidation**, a bittorrent server. This is an extremely basic client,
 that will be able to operate in two modes:
 
