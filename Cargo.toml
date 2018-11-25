@@ -1,7 +1,7 @@
 [package]
 name = "oxi"
 version = "0.1.0"
-authors = ["Ethan Brooks <EB5473@gmail.com>"]
+authors = ["CalmBit <calmbit@posteo.net>"]
 description = "A bare-bones CLI client for oxidation"
 readme = "README.md"
 license = "MPL-2.0"
@@ -9,3 +9,4 @@ license = "MPL-2.0"
 [dependencies]
 regex = "0.2.6"
 bufstream = "0.1.2"
+oxidant = "0.1.0" 

@@ -8,7 +8,7 @@
 //!
 //! Oxi can operate in two modes, the first of which is the
 //! primary focus of Oxi's current development:
-//! 	* Immediate
+//! * Immediate
 //!	* Active
 //!
 //! # Immediate
@@ -25,14 +25,15 @@
 //! which maintains an active connection to the Oxidation server
 //! in order to continually update its state.
 
-#![cfg_attr(feature = "cargo-clippy", allow(print_stdout))]
+#![cfg_attr(feature = "cargo-clippy", deny(pedantic))]
 
 extern crate bufstream;
+extern crate oxidant;
 
 use bufstream::BufStream;
-use std::net::TcpStream;
-use std::io::Write;
 use std::io::BufRead;
+use std::io::Write;
+use std::net::TcpStream;
 
 /// Config acts as a buffer for most of the information we're going
 /// to parse out at the beginning of the app's lifecycle.
@@ -42,7 +43,7 @@ pub struct Config {
     /// The port to connect to the host on
     port: String,
     /// The command to send the host
-    command: String,
+    command: Option<oxidant::Command>,
     /// Whether or not we should exit early because of a help request
     pub help_triggered: bool,
 }
@@ -66,11 +67,12 @@ impl Config {
     pub fn new(args: &mut std::env::Args) -> Result<Self, &'static str> {
         let mut hostname = String::new();
         let mut port = String::new();
-        let mut command = String::new();
         let mut help_triggered = false;
 
-        let bin = args.next()
+        let bin = args
+            .next()
             .expect("Yikes, we don't even have the binary name? Something is definitely wrong...");
+        let mut cmd: Vec<String> = Vec::new();
         while let Some(s) = args.next() {
             match s.trim() {
                 "-H" | "--hostname" => {
@@ -83,14 +85,20 @@ impl Config {
                     print_help(&bin);
                     help_triggered = true;
                 }
-                s => {
-                    command = s.to_string();
+                o => {
+                    cmd.push(String::from(o));
                 }
             }
         }
 
-        if command.is_empty() {
-            return Err("must pass command");
+        let command = match oxidant::Command::parse(&cmd) {
+            Ok(c) => Some(c),
+            Err(_e) => None,
+        };
+
+        if !help_triggered && command == None {
+            print_help(&bin);
+            help_triggered = true;
         }
 
         if hostname.is_empty() {
@@ -116,9 +124,9 @@ impl Config {
 ///
 /// `bin` - the name of the binary currently being executed
 fn print_help(bin: &str) {
-    println!("oxi v.0.0.1 - (C) 2018 Ethan Brooks. All rights reserved.");
+    println!("oxi v.0.0.1 - (C) 2018 Oxidation Team. All rights reserved.");
     println!(
-        "usage: {} [-H|--hostname hostname] [-P|--port port] <command>",
+        "usage: {} [-H|--hostname hostname] [-P|--port port] <command> <args>",
         bin
     );
 }
@@ -133,7 +141,11 @@ pub fn run(config: &Config) -> Result<(), &'static str> {
         Err(_) => return Err("unable to connect to server"),
     };
     let mut stream = BufStream::new(conn);
-    let command = format!("{{\"command\": \"{}\"}}\n", config.command).to_string();
+
+    let command = match config.command {
+        Some(ref c) => c.serialize(),
+        None => panic!("command not found and help not triggered!"),
+    };
 
     match stream.write_all(command.as_bytes()) {
         Ok(_) => {}
