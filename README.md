@@ -1,12 +1,12 @@
-oxi
+ozo
 ==========
 
-**oxi** is a client for **oxidation**, a bittorrent server, written in Rust. This is an extremely basic client,
+**ozo** is a client for **oxidation**, a bittorrent server, written in Rust. This is an extremely basic client,
 that will be able to operate in two modes:
 
 ## Immediate
-Immediate mode retains no client state - **oxi** starts, queries the server or gives it information,
-returns whatever it recieves, and exits. It's more used for peeking and poking, instead of being a
+Immediate mode retains no client state - **ozo** starts, queries the server or gives it information,
+returns whatever it receives, and exits. It's more used for peeking and poking, instead of being a
 monitoring or interactive application.
 
 ## Active

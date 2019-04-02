@@ -4,10 +4,10 @@
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-//! Oxi is a very basic CLI for the headless Oxidation torrent client.
+//! Ozo is a very basic CLI for the headless Oxidation torrent client.
 //!
-//! Oxi can operate in two modes, the first of which is the
-//! primary focus of Oxi's current development:
+//! Ozo can operate in two modes, the first of which is the
+//! primary focus of Ozo's current development:
 //! * Immediate
 //!	* Active
 //!
@@ -124,7 +124,7 @@ impl Config {
 ///
 /// `bin` - the name of the binary currently being executed
 fn print_help(bin: &str) {
-    println!("oxi v.0.0.1 - (C) 2018 Oxidation Team. All rights reserved.");
+    println!("ozo v.0.0.1 - (C) 2018 Oxidation Team. All rights reserved.");
     println!(
         "usage: {} [-H|--hostname hostname] [-P|--port port] <command> <args>",
         bin

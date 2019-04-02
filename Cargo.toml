@@ -1,5 +1,5 @@
 [package]
-name = "oxi"
+name = "ozo"
 version = "0.1.0"
 authors = ["CalmBit <calmbit@posteo.net>"]
 description = "A bare-bones CLI client for oxidation"

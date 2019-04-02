@@ -4,11 +4,11 @@
  *  file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-//! Oxi is a very basic CLI for the headless Oxidation torrent client.
+//! Ozo is a very basic CLI for the headless Oxidation torrent client.
 //!
-//! Oxi can operate in two modes, the first of which is the
-//! primary focus of Oxi's current development:
-//! 	* Immediate
+//! Ozo can operate in two modes, the first of which is the
+//! primary focus of Ozo's current development:
+//! * Immediate
 //!	* Active
 //!
 //! # Immediate
@@ -25,9 +25,9 @@
 //! which maintains an active connection to the Oxidation server
 //! in order to continually update its state.
 
-extern crate oxi;
+extern crate ozo;
 
-use oxi::Config;
+use ozo::Config;
 
 fn main() {
     let config = match Config::new(&mut std::env::args()) {
@@ -44,7 +44,7 @@ fn main() {
         }
     };
 
-    std::process::exit(match oxi::run(&config) {
+    std::process::exit(match ozo::run(&config) {
         Ok(_) => 0,
         Err(e) => {
             eprintln!("Something bad happaned: {}", e);
